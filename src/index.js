@@ -27,12 +27,12 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true); 
+      if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(null, false); 
+        callback(null, false);
       }
     },
     credentials: true,
@@ -44,6 +44,14 @@ app.get("/", async (req, res) => {
       "created_by",
       "_id name profilePicture"
     );
+    let t = false;
+    blogs.map((e) => {
+        const cont = e.content.replace(/<[^>]+>/g, "").slice(0, 200);
+   
+        e.content = cont;
+      
+    });
+
     return res.status(200).json({ blogs: blogs });
   } catch (e) {
     return res.status(500).json({ message: "Internal server error" });
